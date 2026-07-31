@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>INVOICE</h1>
+
+<hr>
+
+<h3>
+    Invoice Number:
+    {{ invoice.invoice_number }}
+</h3>
+
+<p>
+    Date:
+    {{ invoice.invoice_date }}
+</p>
+
+<h3>Customer</h3>
+
+<p>
+    {{ invoice.customer_name }}
+</p>
+
+<p>
+    {{ invoice.customer_email }}
+</p>
+
+<p>
+    {{ invoice.customer_phone }}
+</p>
+
+<p>
+    {{ invoice.customer_address }}
+</p>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Total</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for item in invoice.items.all %}
+
+<tr>
+
+<td>
+    {{ item.product_name }}
+</td>
+
+<td>
+    {{ item.quantity }}
+</td>
+
+<td>
+    ₹{{ item.price }}
+</td>
+
+<td>
+    ₹{{ item.total }}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+
+<br>
+
+<h3>
+    Subtotal:
+    ₹{{ invoice.subtotal }}
+</h3>
+
+<h3>
+    GST 18%:
+    ₹{{ invoice.gst }}
+</h3>
+
+<h2>
+    Grand Total:
+    ₹{{ invoice.grand_total }}
+</h2>
+
+
+<a
+    href="{% url 'dashboard' %}"
+    class="btn"
+>
+    Dashboard
+</a>
+
+
+<form
+    method="POST"
+    action="{% url 'delete_invoice' invoice.id %}"
+    style="display:inline;"
+>
+
+{% csrf_token %}
+
+<button type="submit">
+    Delete
+</button>
+
+</form>
+
+{% endblock %}

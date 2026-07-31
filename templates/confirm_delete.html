@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Delete Invoice?</h2>
+
+<p>
+    Are you sure you want to delete
+    {{ invoice.invoice_number }}?
+</p>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <button type="submit">
+        Yes, Delete
+    </button>
+
+    <a
+        href="{% url 'invoice_detail' invoice.id %}"
+        class="btn"
+    >
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}

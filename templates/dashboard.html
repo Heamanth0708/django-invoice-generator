@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Invoice Dashboard</h1>
+
+<p>
+    Welcome,
+    <strong>{{ user.username }}</strong>
+</p>
+
+<a
+    href="{% url 'create_invoice' %}"
+    class="btn"
+>
+    + Create Invoice
+</a>
+
+<hr>
+
+<h2>Your Invoices</h2>
+
+{% if invoices %}
+
+<table>
+
+    <tr>
+        <th>Invoice Number</th>
+        <th>Customer</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Action</th>
+    </tr>
+
+    {% for invoice in invoices %}
+
+    <tr>
+
+        <td>
+            {{ invoice.invoice_number }}
+        </td>
+
+        <td>
+            {{ invoice.customer_name }}
+        </td>
+
+        <td>
+            {{ invoice.invoice_date }}
+        </td>
+
+        <td>
+            ₹{{ invoice.grand_total }}
+        </td>
+
+        <td>
+
+            <a
+                href="{% url 'invoice_detail' invoice.id %}"
+                class="btn"
+            >
+                View
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% else %}
+
+<p>
+    You haven't created any invoices yet.
+</p>
+
+{% endif %}
+
+{% endblock %}
